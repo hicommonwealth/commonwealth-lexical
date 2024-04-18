@@ -102,38 +102,42 @@ function App() {
   return (
     <div className="App">
 
-      <div>
+      <div className="lexical-toolbar">
+
         <button
-          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}><b>B</b>
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>
+          <b>B</b>
         </button>
+
+        <button
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>
+          <i>i</i>
+        </button>
+
       </div>
 
-      <div>
-        <button
-          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}><i>i</i>
-        </button>
+      <div className="lexical-contenteditable-parent">
+        <LexicalComposer initialConfig={initialConfig}>
+          <RichTextPlugin
+            contentEditable={<ContentEditable style={{}} className="lexical-contenteditable"/>}
+            placeholder={<div></div>}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <HistoryPlugin/>
+          <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
+          <AutoFocusPlugin/>
+          <EditorRefPlugin editorRef={editorRef}/>
+          <LinkPlugin validateUrl={validateUrl}/>
+          <AutoLinkPlugin matchers={MATCHERS}/>
+          <OnChangePlugin onChange={editorState => {
+            editorState.read(() => {
+              const markdown = $convertToMarkdownString(TRANSFORMERS);
+              console.log(markdown);
+            });
+          }}/>
+
+        </LexicalComposer>
       </div>
-
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          contentEditable={<ContentEditable style={{}} className="lexical-contenteditable"/>}
-          placeholder={<div>Enter some text...</div>}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <HistoryPlugin/>
-        <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
-        <AutoFocusPlugin/>
-        <EditorRefPlugin editorRef={editorRef}/>
-        <LinkPlugin validateUrl={validateUrl}/>
-        <AutoLinkPlugin matchers={MATCHERS}/>
-        <OnChangePlugin onChange={editorState => {
-          editorState.read(() => {
-            const markdown = $convertToMarkdownString(TRANSFORMERS);
-            console.log(markdown);
-          });
-        }}/>
-
-      </LexicalComposer>
     </div>
   );
 }
