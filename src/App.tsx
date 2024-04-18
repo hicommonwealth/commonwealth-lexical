@@ -37,9 +37,10 @@ import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {validateUrl} from "./validateUrl";
 import {TableNode} from "@lexical/table";
 
-import { faBold, faItalic } from '@fortawesome/free-solid-svg-icons'
+import { faBold, faItalic, faUnderline, faCode } from '@fortawesome/free-solid-svg-icons'
+import {ListPlugin} from "@lexical/react/LexicalListPlugin";
 
-library.add(faBold, faItalic)
+library.add(faBold, faItalic, faUnderline, faCode)
 
 const TRANSFORMERS = [
   // element
@@ -112,13 +113,22 @@ function App() {
         <button
           onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>
 
-          <FontAwesomeIcon icon={["fas", "bold"]} />
+          <FontAwesomeIcon icon={["fas", "bold"]}/>
         </button>
 
         <button
           onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>
-          <FontAwesomeIcon icon={["fas", "italic"]} />
+          <FontAwesomeIcon icon={["fas", "italic"]}/>
+        </button>
 
+        <button
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>
+          <FontAwesomeIcon icon={["fas", "underline"]}/>
+        </button>
+
+        <button
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>
+          <FontAwesomeIcon icon={["fas", "code"]}/>
         </button>
 
       </div>
@@ -136,6 +146,7 @@ function App() {
           <EditorRefPlugin editorRef={editorRef}/>
           <LinkPlugin validateUrl={validateUrl}/>
           <AutoLinkPlugin matchers={MATCHERS}/>
+          <ListPlugin/>
           <OnChangePlugin onChange={editorState => {
             editorState.read(() => {
               const markdown = $convertToMarkdownString(TRANSFORMERS);
