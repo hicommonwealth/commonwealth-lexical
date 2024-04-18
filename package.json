@@ -26,7 +26,11 @@
     "@lexical/rich-text": "^0.14.5",
     "@lexical/selection": "^0.14.5",
     "@lexical/utils": "^0.14.5",
-    "lexical": "^0.14.5"
+    "lexical": "^0.14.5",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

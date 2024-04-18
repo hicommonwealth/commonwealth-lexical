@@ -8,7 +8,8 @@ import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
-
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   MarkdownShortcutPlugin
 } from "@lexical/react/LexicalMarkdownShortcutPlugin";
@@ -35,6 +36,10 @@ import {MATCHERS} from "./matchers";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {validateUrl} from "./validateUrl";
 import {TableNode} from "@lexical/table";
+
+import { faBold, faItalic } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faBold, faItalic)
 
 const TRANSFORMERS = [
   // element
@@ -106,12 +111,14 @@ function App() {
 
         <button
           onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>
-          <b>B</b>
+
+          <FontAwesomeIcon icon={["fas", "bold"]} />
         </button>
 
         <button
           onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>
-          <i>i</i>
+          <FontAwesomeIcon icon={["fas", "italic"]} />
+
         </button>
 
       </div>
