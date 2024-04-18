@@ -116,7 +116,7 @@ function App() {
 
       <LexicalComposer initialConfig={initialConfig}>
         <RichTextPlugin
-          contentEditable={<ContentEditable/>}
+          contentEditable={<ContentEditable style={{}} className="lexical-contenteditable"/>}
           placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
