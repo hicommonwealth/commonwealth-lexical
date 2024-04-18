@@ -13,7 +13,7 @@ import {
   MarkdownShortcutPlugin
 } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import {EditorRefPlugin} from "@lexical/react/LexicalEditorRefPlugin";
-import {LexicalEditor} from "lexical";
+import {FORMAT_TEXT_COMMAND, LexicalEditor} from "lexical";
 import {
   $convertToMarkdownString,
   BOLD_ITALIC_STAR,
@@ -32,6 +32,9 @@ import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
 import {CodeNode} from "@lexical/code";
 import {AutoLinkPlugin} from "@lexical/react/LexicalAutoLinkPlugin";
 import {MATCHERS} from "./matchers";
+import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
+import {validateUrl} from "./validateUrl";
+import {TableNode} from "@lexical/table";
 
 const TRANSFORMERS = [
   // element
@@ -87,6 +90,7 @@ const initialConfig = {
     ListItemNode,
     LinkNode,
     AutoLinkNode,
+    TableNode
   ],
   onError: () => console.error("Some error or something!"),
 };
@@ -97,24 +101,37 @@ function App() {
 
   return (
     <div className="App">
+
+      <div>
+        <button
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}><b>B</b>
+        </button>
+      </div>
+
+      <div>
+        <button
+          onClick={() => editorRef.current?.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}><i>i</i>
+        </button>
+      </div>
+
       <LexicalComposer initialConfig={initialConfig}>
         <RichTextPlugin
-          contentEditable={<ContentEditable />}
+          contentEditable={<ContentEditable/>}
           placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <HistoryPlugin />
+        <HistoryPlugin/>
         <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
-        <AutoFocusPlugin />
-        <EditorRefPlugin editorRef={editorRef} />
+        <AutoFocusPlugin/>
+        <EditorRefPlugin editorRef={editorRef}/>
+        <LinkPlugin validateUrl={validateUrl}/>
         <AutoLinkPlugin matchers={MATCHERS}/>
         <OnChangePlugin onChange={editorState => {
-
           editorState.read(() => {
             const markdown = $convertToMarkdownString(TRANSFORMERS);
             console.log(markdown);
           });
-        }} />
+        }}/>
 
       </LexicalComposer>
     </div>
