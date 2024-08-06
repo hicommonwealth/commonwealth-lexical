@@ -39,6 +39,8 @@ import {TableNode} from "@lexical/table";
 
 import { faBold, faItalic, faUnderline, faCode } from '@fortawesome/free-solid-svg-icons'
 import {ListPlugin} from "@lexical/react/LexicalListPlugin";
+import LexicalClickableLinkPlugin
+  from "@lexical/react/LexicalClickableLinkPlugin";
 
 library.add(faBold, faItalic, faUnderline, faCode)
 
@@ -147,6 +149,8 @@ function App() {
           <LinkPlugin validateUrl={validateUrl}/>
           <AutoLinkPlugin matchers={MATCHERS}/>
           <ListPlugin/>
+          <LexicalClickableLinkPlugin/>
+
           <OnChangePlugin onChange={editorState => {
             editorState.read(() => {
               const markdown = $convertToMarkdownString(TRANSFORMERS);

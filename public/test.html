@@ -1,0 +1,17 @@
+<html>
+<body>
+
+<p>
+    hello world <b>asdf</b>
+</p>
+<script>
+    window.addEventListener('paste', event => {
+        console.log("FIXME0: ", event.clipboardData.items.length)
+        console.log("FIXME1: ", event.clipboardData.types)
+        for(const item in Array.from(event.clipboardData.items)) {
+            console.log("FIXME2: ", item.type)
+        }
+    })
+</script>
+</body>
+</html>
